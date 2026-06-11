@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nexa Agricultural Groups</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --earth:   #2C3E2D;
+      --forest:  #3D5A3E;
+      --sage:    #7A9E7E;
+      --gold:    #C8A84B;
+      --cream:   #F7F3EC;
+      --white:   #FFFFFF;
+      --ink:     #1A1F1B;
+      --muted:   #5A6B5C;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      background: rgba(44,62,45,0.97);
+      backdrop-filter: blur(8px);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%;
+      height: 68px;
+      border-bottom: 1px solid rgba(200,168,75,0.2);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--gold);
+      letter-spacing: 0.03em;
+    }
+    .nav-logo span { color: var(--white); font-weight: 300; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--earth) 0%, #1a2b1b 50%, #0f1a10 100%);
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 120px 5% 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    #hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%237A9E7E' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      opacity: 0.6;
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(200,168,75,0.4);
+      padding: 6px 16px;
+      border-radius: 2px;
+      margin-bottom: 2rem;
+      width: fit-content;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 6vw, 5.5rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.1;
+      max-width: 760px;
+      margin-bottom: 1.5rem;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+    .hero-sub {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.65);
+      max-width: 540px;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+    }
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--gold);
+      color: var(--earth);
+      padding: 14px 32px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: #d9b95a; transform: translateY(-1px); }
+    .btn-outline {
+      border: 1px solid rgba(255,255,255,0.35);
+      color: var(--white);
+      padding: 14px 32px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--gold); background: rgba(200,168,75,0.08); }
+
+    .hero-stats {
+      display: flex; gap: 3rem; flex-wrap: wrap;
+      margin-top: 5rem;
+      padding-top: 3rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .stat-item { }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: var(--gold);
+      font-weight: 700;
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    /* ── SECTIONS COMMON ── */
+    section { padding: 100px 5%; }
+    .section-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 600;
+      color: var(--earth);
+      line-height: 1.2;
+      margin-bottom: 1.2rem;
+    }
+    .section-lead {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 580px;
+      line-height: 1.8;
+    }
+
+    /* ── ABOUT ── */
+    #about { background: var(--white); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      margin-top: 3rem;
+    }
+    .about-visual {
+      background: linear-gradient(145deg, var(--forest), var(--earth));
+      border-radius: 4px;
+      padding: 60px 50px;
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+    .about-visual::after {
+      content: '🌾';
+      position: absolute;
+      bottom: -10px; right: -10px;
+      font-size: 8rem;
+      opacity: 0.07;
+    }
+    .about-visual-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      line-height: 1.45;
+      margin-bottom: 1.5rem;
+      color: var(--white);
+    }
+    .about-visual-sub { font-size: 0.9rem; color: rgba(255,255,255,0.6); line-height: 1.7; }
+    .about-text p { color: var(--muted); margin-bottom: 1.2rem; line-height: 1.85; font-size: 0.97rem; }
+    .about-pillars {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1rem; margin-top: 1.5rem;
+    }
+    .pillar {
+      background: var(--cream);
+      border-left: 3px solid var(--gold);
+      padding: 14px 16px;
+      border-radius: 0 2px 2px 0;
+    }
+    .pillar-title { font-weight: 600; font-size: 0.85rem; color: var(--earth); }
+    .pillar-desc { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+
+    /* ── SERVICES ── */
+    #services { background: var(--cream); }
+    .services-header { max-width: 560px; margin-bottom: 4rem; }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+    .service-card {
+      background: var(--white);
+      border: 1px solid rgba(44,62,45,0.08);
+      border-radius: 4px;
+      padding: 2.5rem 2rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(44,62,45,0.1); }
+    .service-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--gold);
+    }
+    .service-icon { font-size: 2.5rem; margin-bottom: 1.2rem; }
+    .service-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--earth);
+      margin-bottom: 0.7rem;
+    }
+    .service-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.75; margin-bottom: 1.2rem; }
+    .service-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--forest);
+      background: rgba(61,90,62,0.08);
+      padding: 4px 10px;
+      border-radius: 2px;
+    }
+
+    /* ── WHY / PORTFOLIO ── */
+    #portfolio { background: var(--earth); }
+    #portfolio .section-title { color: var(--white); }
+    #portfolio .section-eyebrow { color: var(--gold); }
+    #portfolio .section-lead { color: rgba(255,255,255,0.6); }
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+    .why-card {
+      border: 1px solid rgba(200,168,75,0.2);
+      border-radius: 4px;
+      padding: 2rem;
+      background: rgba(255,255,255,0.03);
+      transition: background 0.2s;
+    }
+    .why-card:hover { background: rgba(255,255,255,0.06); }
+    .why-icon {
+      width: 44px; height: 44px;
+      background: rgba(200,168,75,0.15);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      margin-bottom: 1.2rem;
+    }
+    .why-title { font-weight: 600; font-size: 1rem; color: var(--white); margin-bottom: 0.5rem; }
+    .why-desc { font-size: 0.88rem; color: rgba(255,255,255,0.55); line-height: 1.75; }
+
+    /* ── TESTIMONIALS ── */
+    #testimonials { background: var(--white); }
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3.5rem;
+    }
+    .testi-card {
+      background: var(--cream);
+      border-radius: 4px;
+      padding: 2.5rem;
+      border-left: 3px solid var(--gold);
+    }
+    .testi-quote {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--earth);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+    .testi-author { display: flex; align-items: center; gap: 0.8rem; }
+    .testi-avatar {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      background: var(--forest);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700;
+      color: var(--white);
+      font-size: 0.85rem;
+    }
+    .testi-name { font-weight: 600; font-size: 0.9rem; color: var(--earth); }
+    .testi-role { font-size: 0.78rem; color: var(--muted); }
+
+    /* ── INVESTMENT / CTA ── */
+    #invest {
+      background: linear-gradient(135deg, #1a2b1b, var(--earth));
+      text-align: center;
+      padding: 120px 5%;
+    }
+    #invest .section-eyebrow { color: var(--gold); }
+    #invest .section-title { color: var(--white); margin: 0 auto 1.2rem; }
+    #invest .section-lead { color: rgba(255,255,255,0.6); margin: 0 auto 2.5rem; text-align: center; }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--cream); }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 80px;
+      margin-top: 3rem;
+    }
+    .contact-info h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--earth);
+      margin-bottom: 1rem;
+    }
+    .contact-info p { font-size: 0.95rem; color: var(--muted); line-height: 1.8; margin-bottom: 2rem; }
+    .contact-item { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 1.2rem; }
+    .contact-item-icon {
+      width: 36px; height: 36px; min-width: 36px;
+      background: var(--earth);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem;
+    }
+    .contact-item-text { font-size: 0.9rem; color: var(--muted); }
+    .contact-item-label { font-weight: 600; color: var(--earth); font-size: 0.8rem; letter-spacing: 0.05em; }
+
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group label { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--earth); }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: var(--white);
+      border: 1px solid rgba(44,62,45,0.15);
+      border-radius: 2px;
+      padding: 12px 14px;
+      font-size: 0.9rem;
+      font-family: 'Inter', sans-serif;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--forest); }
+    .form-group textarea { resize: vertical; min-height: 130px; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink);
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 2rem 5%;
+      font-size: 0.8rem;
+    }
+    footer strong { color: var(--gold); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      .form-row { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .hero-stats { gap: 1.5rem; }
+      .about-pillars { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">Nexa <span>Agricultural Groups</span></div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Operations</a></li>
+      <li><a href="#portfolio">Why Us</a></li>
+      <li><a href="#testimonials">Testimonials</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-eyebrow">Integrated Agricultural Enterprise</div>
+    <h1 class="hero-title">
+      Cultivating <em>Growth</em> Across Every Season
+    </h1>
+    <p class="hero-sub">Nexa Agricultural Groups is a diversified farming enterprise supplying high-demand raw materials to food processors, wineries, and dairy and meat industries worldwide.</p>
+    <div class="hero-ctas">
+      <a href="#invest" class="btn-primary">View Investment Opportunity</a>
+      <a href="#services" class="btn-outline">Our Operations</a>
+    </div>
+    <!-- Stats moved below invest section -->
+
+  </section>
+
+  <!-- INVEST / CTA -->
+  <section id="invest">
+    <div class="section-eyebrow">Investment Opportunity</div>
+    <h2 class="section-title" style="max-width:640px;">Partner in a Sustainable Agricultural Future</h2>
+    <p class="section-lead">Join a diversified agricultural enterprise built for stability, growth, and strong returns. Here is exactly what your investment looks like.</p>
+
+    <!-- Investment Range + Return cards -->
+    <div style="display:flex;gap:1.5rem;flex-wrap:wrap;justify-content:center;margin:3rem 0 2.5rem;">
+      <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(200,168,75,0.35);border-radius:4px;padding:2rem 2.5rem;text-align:center;min-width:200px;">
+        <div style="font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:0.5rem;">Investment Range</div>
+        <div style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);font-weight:700;">$5,000 – $55,000</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(200,168,75,0.35);border-radius:4px;padding:2rem 2.5rem;text-align:center;min-width:200px;">
+        <div style="font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:0.5rem;">Guaranteed Return</div>
+        <div style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);font-weight:700;">3× Your Capital</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(200,168,75,0.35);border-radius:4px;padding:2rem 2.5rem;text-align:center;min-width:200px;">
+        <div style="font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:0.5rem;">Example on $5,000</div>
+        <div style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);font-weight:700;">Returns $15,000</div>
+      </div>
+    </div>
+
+    <!-- Where money goes -->
+    <div style="max-width:780px;margin:0 auto 3rem;">
+      <div style="font-size:0.78rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.45);text-align:center;margin-bottom:1.5rem;">Where Your Investment Goes</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;">
+        <div style="background:rgba(255,255,255,0.04);border-radius:4px;padding:1.4rem 1rem;text-align:center;">
+          <div style="font-size:1.8rem;margin-bottom:0.5rem;">🌍</div>
+          <div style="font-weight:600;font-size:0.85rem;color:var(--white);">Land</div>
+          <div style="font-size:0.75rem;color:rgba(255,255,255,0.45);margin-top:4px;">Farm land & property</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.04);border-radius:4px;padding:1.4rem 1rem;text-align:center;">
+          <div style="font-size:1.8rem;margin-bottom:0.5rem;">🏗️</div>
+          <div style="font-weight:600;font-size:0.85rem;color:var(--white);">Infrastructure</div>
+          <div style="font-size:0.75rem;color:rgba(255,255,255,0.45);margin-top:4px;">Barns, storage & facilities</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.04);border-radius:4px;padding:1.4rem 1rem;text-align:center;">
+          <div style="font-size:1.8rem;margin-bottom:0.5rem;">🐄</div>
+          <div style="font-weight:600;font-size:0.85rem;color:var(--white);">Livestock</div>
+          <div style="font-size:0.75rem;color:rgba(255,255,255,0.45);margin-top:4px;">Dairy & beef cattle</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.04);border-radius:4px;padding:1.4rem 1rem;text-align:center;">
+          <div style="font-size:1.8rem;margin-bottom:0.5rem;">💧</div>
+          <div style="font-weight:600;font-size:0.85rem;color:var(--white);">Irrigation</div>
+          <div style="font-size:0.75rem;color:rgba(255,255,255,0.45);margin-top:4px;">Water systems & wells</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.04);border-radius:4px;padding:1.4rem 1rem;text-align:center;">
+          <div style="font-size:1.8rem;margin-bottom:0.5rem;">🚜</div>
+          <div style="font-weight:600;font-size:0.85rem;color:var(--white);">Machinery</div>
+          <div style="font-size:0.75rem;color:rgba(255,255,255,0.45);margin-top:4px;">Equipment & tools</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTAs -->
+    <!-- Stats Row -->
+    <div style="display:flex;gap:2rem;flex-wrap:wrap;justify-content:center;margin:2.5rem 0 2rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,0.08);">
+      <div style="text-align:center;">
+        <div style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);font-weight:700;line-height:1;">4</div>
+        <div style="font-size:0.72rem;color:rgba(255,255,255,0.45);letter-spacing:0.1em;text-transform:uppercase;margin-top:4px;">Production Streams</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);font-weight:700;line-height:1;">3×</div>
+        <div style="font-size:0.72rem;color:rgba(255,255,255,0.45);letter-spacing:0.1em;text-transform:uppercase;margin-top:4px;">Return on Capital</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);font-weight:700;line-height:1;">∞</div>
+        <div style="font-size:0.72rem;color:rgba(255,255,255,0.45);letter-spacing:0.1em;text-transform:uppercase;margin-top:4px;">Scalable Capacity</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);font-weight:700;line-height:1;">0</div>
+        <div style="font-size:0.72rem;color:rgba(255,255,255,0.45);letter-spacing:0.1em;text-transform:uppercase;margin-top:4px;">Single Point of Failure</div>
+      </div>
+    </div>
+
+    <!-- CTA Buttons -->
+    <div style="margin-top:1rem;">
+      <p style="color:rgba(255,255,255,0.5);font-size:0.85rem;margin-bottom:1.5rem;">Ready to invest? Reach us directly through Telegram or Email — we respond promptly.</p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+        <a href="https://t.me/OFFICIALMANAGEMENTNEXAGROUPS" target="_blank" class="btn-primary" style="display:inline-flex;align-items:center;gap:8px;">✈️ Invest via Telegram</a>
+        <a href="mailto:nexaagriculturalgroups@gmail.com" class="btn-outline" style="display:inline-flex;align-items:center;gap:8px;">📧 Invest via Email</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-grid">
+      <div class="about-visual">
+        <div class="about-visual-quote">"A farm built not on a single crop, but on a complete agricultural ecosystem."</div>
+        <div class="about-visual-sub">Rather than relying on one crop or livestock system, Nexa is structured around four complementary production streams — each serving established commercial markets, all working together.</div>
+      </div>
+      <div class="about-text">
+        <div class="section-eyebrow">About Nexa</div>
+        <h2 class="section-title">Who We Are</h2>
+        <p>Nexa Agricultural Groups is developing a diversified agricultural enterprise designed to supply high-demand raw materials to food and beverage processors, wineries, and dairy and meat industries.</p>
+        <p>Our integrated farm model combines multiple operations to reduce risk while increasing stability, scalability, and long-term profitability — serving the global food supply chain from the ground up.</p>
+        <div class="about-pillars">
+          <div class="pillar">
+            <div class="pillar-title">Diversified Risk</div>
+            <div class="pillar-desc">Multiple streams protect against market volatility</div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-title">Industrial Demand</div>
+            <div class="pillar-desc">Products tied to global food supply chains</div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-title">Scalable Model</div>
+            <div class="pillar-desc">Land, herd, and crop expansion ready</div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-title">Long-Term Focus</div>
+            <div class="pillar-desc">Built for enduring supply contracts</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES / OPERATIONS -->
+  <section id="services">
+    <div class="services-header">
+      <div class="section-eyebrow">Core Operations</div>
+      <h2 class="section-title">Our Production Streams</h2>
+      <p class="section-lead">Four complementary farming operations — each generating independent revenue while strengthening the whole enterprise.</p>
+    </div>
+    <!-- Operations laid out clearly below, no click needed -->
+    <div class="services-grid">
+
+      <div class="service-card">
+        <div class="service-icon">🍇</div>
+        <div class="service-title">Grape Farming</div>
+        <div class="service-desc">High-quality grape cultivation targeted specifically at wineries and wine production companies. Annual supply contracts and premium market pricing.</div>
+        <div class="service-tags">
+          <span class="tag">Wine Industry</span>
+          <span class="tag">Contract Supply</span>
+          <span class="tag">High Value</span>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">🌾</div>
+        <div class="service-title">Grain Farming</div>
+        <div class="service-desc">Staple grain production — barley, corn, and wheat — essential raw materials for food processors, beverage manufacturers, and animal feed suppliers.</div>
+        <div class="service-tags">
+          <span class="tag">Barley</span>
+          <span class="tag">Corn</span>
+          <span class="tag">Wheat</span>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">🥛</div>
+        <div class="service-title">Dairy Cattle</div>
+        <div class="service-desc">Milk production for processors and dairy companies. Daily demand product with consistent consumption patterns — one of the most stable agricultural income sources.</div>
+        <div class="service-tags">
+          <span class="tag">Dairy Processing</span>
+          <span class="tag">Recurring Revenue</span>
+          <span class="tag">Daily Demand</span>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">🐄</div>
+        <div class="service-title">Beef Cattle</div>
+        <div class="service-desc">Beef cattle raised for meat production and livestock sales to processors and distributors. Dual-channel revenue from live animal sales and meat supply chains.</div>
+        <div class="service-tags">
+          <span class="tag">Meat Processing</span>
+          <span class="tag">Live Sales</span>
+          <span class="tag">Distributors</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- WHY / PORTFOLIO -->
+  <section id="portfolio">
+    <div class="section-eyebrow">Why Nexa</div>
+    <h2 class="section-title">Built for Stability & Growth</h2>
+    <p class="section-lead">The Nexa model is engineered around four principles that reduce investor risk while maximising long-term return potential.</p>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon">🛡️</div>
+        <div class="why-title">Diversification Reduces Risk</div>
+        <div class="why-desc">Not dependent on a single crop or livestock type. If one market fluctuates, the others continue generating revenue uninterrupted.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">💰</div>
+        <div class="why-title">Multiple Income Streams</div>
+        <div class="why-desc">Revenue from seasonal crops, daily dairy production, and livestock sales — income flows across every season and every market cycle.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🌍</div>
+        <div class="why-title">Strong Industrial Demand</div>
+        <div class="why-desc">All products serve essential global industries: wine production, food manufacturing, dairy processing, and meat supply chains.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">📈</div>
+        <div class="why-title">Scalable Structure</div>
+        <div class="why-desc">Expansion pathways include increased land acquisition, larger livestock herds, expanded crop output, and long-term processor agreements.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <div class="section-eyebrow">What People Say</div>
+    <h2 class="section-title">Trusted by Partners & Investors</h2>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-quote">"The diversified model is exactly what we look for — stable, multi-revenue, and tied to real industrial demand. Nexa stands out in the agricultural space."</div>
+        <div class="testi-author">
+          <div class="testi-avatar">JM</div>
+          <div>
+            <div class="testi-name">James M.</div>
+            <div class="testi-role">Agricultural Investment Analyst</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-quote">"Consistent grain supply and quality standards. Nexa has been a reliable raw material partner for our processing operations."</div>
+        <div class="testi-author">
+          <div class="testi-avatar">SR</div>
+          <div>
+            <div class="testi-name">Sarah R.</div>
+            <div class="testi-role">Operations Director, Food Processor</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-quote">"Their grape supply contract gave us the annual consistency we needed. Quality product, professional operation from field to delivery."</div>
+        <div class="testi-author">
+          <div class="testi-avatar">DK</div>
+          <div>
+            <div class="testi-name">David K.</div>
+            <div class="testi-role">Head of Procurement, Winery Group</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="section-eyebrow">Contact Us</div>
+        <h2 class="section-title">Let's Start a Conversation</h2>
+        <p>Whether you are an investor, processor, or prospective supply partner — we'd love to hear from you. Reach out and our team will respond promptly.</p>
+        <div class="contact-item">
+          <div class="contact-item-icon">📧</div>
+          <div>
+            <div class="contact-item-label">Email</div>
+            <div class="contact-item-text"><a href="mailto:nexaagriculturalgroups@gmail.com" style="color:var(--forest);text-decoration:none;font-weight:600;">nexaagriculturalgroups@gmail.com</a></div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">📍</div>
+          <div>
+            <div class="contact-item-label">Location</div>
+            <div class="contact-item-text">Texas, USA</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">✈️</div>
+          <div>
+            <div class="contact-item-label">Telegram</div>
+            <div class="contact-item-text"><a href="https://t.me/OFFICIALMANAGEMENTNEXAGROUPS" target="_blank" style="color:var(--forest);text-decoration:none;font-weight:600;">@OFFICIALMANAGEMENTNEXAGROUPS</a></div>
+          </div>
+        </div>
+      </div>
+
+      <form class="contact-form" action="https://formspree.io/f/xgobzjjv" method="POST">
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" name="first_name" placeholder="John" required />
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" name="last_name" placeholder="Doe" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" name="email" placeholder="john@example.com" required />
+        </div>
+        <div class="form-group">
+          <label>I am a…</label>
+          <select name="inquiry_type">
+            <option>Potential Investor</option>
+            <option>Supply Partner / Processor</option>
+            <option>Winery / Beverage Company</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea name="message" placeholder="Tell us about your interest or inquiry…" required></textarea>
+        </div>
+        <button type="submit" class="btn-primary" style="width:fit-content;border:none;cursor:pointer;">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 <strong>Nexa Agricultural Groups</strong>. All rights reserved. &nbsp;·&nbsp; Texas, USA &nbsp;·&nbsp; Cultivating the future of food supply.</p>
+  </footer>
+
+</body>
+</html>
